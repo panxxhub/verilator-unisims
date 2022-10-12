@@ -13,7 +13,7 @@ module IDDRE1
 #(
     parameter  	    DDR_CLK_EDGE  = "OPPOSITE_EDGE",
     parameter [0:0] IS_CB_INVERTED = 1'b0,
-    parameter [0:0] IS_C_INVERTED  = 1'b0,
+    parameter [0:0] IS_C_INVERTED  = 1'b0
 )
 (
     input  C,
