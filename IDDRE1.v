@@ -38,13 +38,8 @@ always @(posedge C or posedge R) begin
 	end
 end 
 
-always @(negedge C or posedge R) begin
-	if(R) begin
-		q0 <= 1'b0;
-		q1 <= 1'b0;
-	end else if(C) begin
+always @(negedge C) begin
 		q1 <= D;
-	end
 end
   
 
