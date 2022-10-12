@@ -32,14 +32,17 @@ module IDDRE1
 always @(posedge C or posedge R) begin
 	if(R) begin
 		q0 <= 1'b0;
-		q1 <= 1'b0;
 	end else if(C) begin
 		q0 <= D;
 	end
 end 
 
-always @(negedge C) begin
+always @(posedge CB or posedge R) begin
+	if(R) begin
+		q1 <= 1'b0;
+	end else if(C) begin
 		q1 <= D;
+	end
 end
   
 
