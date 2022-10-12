@@ -18,30 +18,33 @@ module IDDRE1
 (
     input  C,
     input  CB,
+
     input  D,
+
     output Q1,
     output Q2,
-    input  R
+
+    input  R /* Active-High Asynchronous Reset */
 );
 
-	reg q0,q1;
+	reg q1,q2;
 
-	assign Q1 = q0;
-	assign Q2 = q1;
+	assign Q1 = q1;
+	assign Q2 = q2;
 
 always @(posedge C or posedge R) begin
 	if(R) begin
-		q0 <= 1'b0;
+		q1 <= 1'b0;
 	end else if(C) begin
-		q0 <= D;
+		q1 <= D;
 	end
 end 
 
 always @(posedge CB or posedge R) begin
 	if(R) begin
-		q1 <= 1'b0;
-	end else if(C) begin
-		q1 <= D;
+		q2 <= 1'b0;
+	end else if(CB) begin
+		q2 <= D;
 	end
 end
   
