@@ -11,7 +11,7 @@
 
 module IDDRE1
 #(
-    parameter  	    DDR_CLK_EDGE  = "OPPOSITE_EDGE",
+    parameter  	    DDR_CLK_EDGE  = "SAME_EDGE_PIPELINED",
     parameter [0:0] IS_CB_INVERTED = 1'b0,
     parameter [0:0] IS_C_INVERTED  = 1'b0
 )
@@ -27,16 +27,18 @@ module IDDRE1
     input  R /* Active-High Asynchronous Reset */
 );
 
-	reg q1,q2;
+	reg q1,q1_stage,q2,q2_stage;
 
-	assign Q1 = q1;
-	assign Q2 = q2;
+	assign Q1 = q1_stage;
+	assign Q2 = q2_stage;
 
 always @(posedge C or posedge R) begin
 	if(R) begin
 		q1 <= 1'b0;
 	end else if(C) begin
 		q1 <= D;
+		q1_stage <= q1;
+		q2_stage <= q2;
 	end
 end 
 
