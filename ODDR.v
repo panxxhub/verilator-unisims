@@ -13,17 +13,19 @@ module ODDR
   #(
      parameter [0:0] DDR_CLK_EDGE = "SAME_EDGE",
      parameter [0:0] INIT = 1'b0,
-     parameter SRTYPE = "SYNC",
+     parameter SRTYPE = "SYNC"
    )
    (
      input  C,
+     input  CE,
      input  D1,
      input  D2,
      input  R,
      output Q
    );
 
-  wire       w_CLK = C;
+
+  wire       w_CLK = C&CE;
   wire       w_D1  = D1;
   wire       w_D2  = D2;
   wire       w_SR;
