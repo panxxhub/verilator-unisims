@@ -20,6 +20,7 @@ module ODDR
      input  CE,
      input  D1,
      input  D2,
+     input  S,
      input  R,
      output Q
    );

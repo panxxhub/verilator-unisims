@@ -25,7 +25,8 @@ module IDDR
      output Q1,
      output Q2,
 
-     input  R /* Active-High Asynchronous Reset */
+     input  R, /* Active-High Reset */
+     input  S  /* Active-High Set */
    );
 
   reg q1,q1_stage,q2,q2_stage,q2_stage2;
@@ -33,7 +34,7 @@ module IDDR
   assign Q1 = q1_stage;
   assign Q2 = q2_stage2;
 
-  always @(posedge C or posedge R)
+  always @(posedge C or posedge R or posedge S)
   begin
     if(R)
     begin
@@ -43,7 +44,15 @@ module IDDR
       q2_stage <= INIT_Q2;
       q2_stage2 <= INIT_Q2;
     end
-    else if (CE == 1'b1)
+    else if(S)
+    begin
+      q1 <= ~INIT_Q1;
+      q1_stage <= ~INIT_Q1;
+
+      q2_stage <= ~INIT_Q2;
+      q2_stage2 <= ~INIT_Q2;
+    end
+    else if (C & CE)
     begin
       q1 <= D;
       q1_stage <= q1;
@@ -55,14 +64,18 @@ module IDDR
 
 
 
-  always @(negedge C or posedge R)
+  always @(negedge C or posedge R or posedge S)
   begin
     if (R)
     begin
       q2<= INIT_Q2;
     end
+    else if (S)
+    begin
+      q2 <= ~INIT_Q2;
+    end
     else
-      if(CE == 1'b1)
+      if(C & CE)
       begin
         q2 <= D;
       end
