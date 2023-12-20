@@ -47,7 +47,7 @@ module ODDR
 
     if (w_SR)
     begin
-      r_Q_p  <= INIT ^ r_Q_n;
+      r_Q_p  <= INIT ;
       r_D2_p <= INIT;
     end
     else
@@ -62,7 +62,7 @@ module ODDR
 
     if (w_SR)
     begin
-      r_Q_n <= INIT ^ r_Q_p;
+      r_Q_n <= INIT;
     end
     else
     begin

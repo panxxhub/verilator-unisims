@@ -11,7 +11,7 @@
 
 module IDDR
   #(
-     parameter       DDR_CLK_EDGE  = "OPPOSITE_EDGE",
+     parameter       DDR_CLK_EDGE  = "SAME_EDGE_PIPELINED",
      parameter [0:0] INIT_Q1 = 1'b0,
      parameter [0:0] INIT_Q2 = 1'b0,
      parameter       SRTYPE = "ASYNC"
@@ -38,18 +38,18 @@ module IDDR
     if(R)
     begin
       q1 <= INIT_Q1;
-      // q2 <= INIT_Q2;
+      q1_stage <= INIT_Q1;
+
       q2_stage <= INIT_Q2;
       q2_stage2 <= INIT_Q2;
-      q1_stage <= INIT_Q1;
     end
     else if (CE == 1'b1)
     begin
       q1 <= D;
       q1_stage <= q1;
+
       q2_stage <= q2;
       q2_stage2 <= q2_stage;
-
     end
   end
 
