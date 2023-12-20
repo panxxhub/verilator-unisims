@@ -29,56 +29,46 @@ module IDDR
      input  S  /* Active-High Set */
    );
 
-  reg q1,q1_stage,q2,q2_stage,q2_stage2;
 
-  assign Q1 = q1_stage;
-  assign Q2 = q2_stage2;
+  // the iddr core logic
+  reg q1,q1_stage,q2,q2_stage;
+  reg q1_s2,q2_s2;
 
-  always @(posedge C or posedge R or posedge S)
+  assign Q1 = q1_s2;
+  assign Q2 = q2_s2;
+
+
+  always @(negedge C or posedge R)
   begin
     if(R)
     begin
-      q1 <= INIT_Q1;
-      q1_stage <= INIT_Q1;
-
-      q2_stage <= INIT_Q2;
-      q2_stage2 <= INIT_Q2;
+      q2 <= 1'b0;
     end
-    else if(S)
+    else if(CE)
     begin
-      q1 <= ~INIT_Q1;
-      q1_stage <= ~INIT_Q1;
-
-      q2_stage <= ~INIT_Q2;
-      q2_stage2 <= ~INIT_Q2;
+      q2 <= D;
+      q2_stage <= q2;
+      q1_stage <= q1;
     end
-    else if (C & CE)
+  end
+
+  always @(posedge C or posedge R)
+  begin
+    if(R)
+    begin
+      q1 <= 1'b0;
+    end
+    else if(CE)
     begin
       q1 <= D;
-      q1_stage <= q1;
 
-      q2_stage <= q2;
-      q2_stage2 <= q2_stage;
+      q1_s2 <= q1_stage;
+      q2_s2 <= q2_stage;
     end
   end
 
 
 
-  always @(negedge C or posedge R or posedge S)
-  begin
-    if (R)
-    begin
-      q2<= INIT_Q2;
-    end
-    else if (S)
-    begin
-      q2 <= ~INIT_Q2;
-    end
-    else
-      if(C & CE)
-      begin
-        q2 <= D;
-      end
-  end
+
 
 endmodule
