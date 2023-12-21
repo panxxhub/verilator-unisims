@@ -34,8 +34,8 @@ module IDDR
   reg q1,q1_stage,q2,q2_stage;
   reg q1_s2,q2_s2;
 
-  assign Q1 = q1_s2;
-  assign Q2 = q2_s2;
+  assign Q1 = q2_s2;
+  assign Q2 = q1_s2;
 
 
   always @(negedge C or posedge R)
